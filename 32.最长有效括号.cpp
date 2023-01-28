@@ -7,6 +7,7 @@
 // @lc code=start
 #include<stack>
 #include<vector>
+#include<string>
 #include<algorithm>
 using namespace std;
 class Solution {

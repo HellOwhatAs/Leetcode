@@ -5,6 +5,8 @@
  */
 
 // @lc code=start
+#include<vector>
+using namespace std;
 class Solution {
 public:
     int area(const vector<int>& height,int l,int r){
