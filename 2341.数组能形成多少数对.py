@@ -9,8 +9,7 @@ from typing import List
 from collections import Counter
 class Solution:
     def numberOfPairs(self, nums: List[int]) -> List[int]:
-        c = Counter(nums)
-        return [sum(i//2 for i in c.values()), sum(i%2 for i in c.values())]
+        return [tmp:=sum(i//2 for i in Counter(nums).values()), len(nums) - 2 * tmp]
 # @lc code=end
 
 print(Solution().numberOfPairs([0]))
