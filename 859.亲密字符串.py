@@ -5,7 +5,6 @@
 #
 
 # @lc code=start
-from collections import Counter
 class Solution:
     def buddyStrings(self, s: str, goal: str) -> bool:
         if len(s) != len(goal): return False
@@ -13,7 +12,7 @@ class Solution:
         n = len(diff)
         if n > 2 or n == 1: return False
         if n == 2: return diff[0][0] == diff[1][1] and diff[0][1] == diff[1][0]
-        return max(Counter(s).values()) >= 2
+        return len(set(s)) < len(s)
 
 
 # @lc code=end
