@@ -7,9 +7,12 @@
 # @lc code=start
 from typing import List
 class Solution:
+    @staticmethod
+    def getleafs(root, prefix = ''):
+        if not root: yield prefix
+        for folder in root: yield from (prefix + '/' + subpath for subpath in Solution.getleafs(root[folder], folder))
     def removeSubfolders(self, folder: List[str]) -> List[str]:
-        filesys, ret = {}, []
-        folder.sort(key=len)
+        filesys = {}
         for path in folder:
             p = filesys
             for folder in path[1:].split('/'):
@@ -17,9 +20,8 @@ class Solution:
                 else:
                     if not folder in p: p[folder] = {}
                     p = p[folder]
-            else:
-                ret.append(path)
-        return ret
+            else: p.clear()
+        return list(Solution.getleafs(filesys))
 # @lc code=end
 
-print(Solution().removeSubfolders(folder = ["/a/b/c","/a/b/ca","/a/b/d"]))
+print(Solution().removeSubfolders(folder = ["/a","/a/b/c","/a/b/d"]))
