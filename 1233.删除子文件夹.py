@@ -10,7 +10,7 @@ class Solution:
     @staticmethod
     def getleafs(root, prefix = ''):
         if not root: yield prefix
-        for folder in root: yield from (prefix + '/' + subpath for subpath in Solution.getleafs(root[folder], folder))
+        for folder in root: yield from Solution.getleafs(root[folder], f'{prefix}/{folder}')
     def removeSubfolders(self, folder: List[str]) -> List[str]:
         filesys = {}
         for path in folder:
