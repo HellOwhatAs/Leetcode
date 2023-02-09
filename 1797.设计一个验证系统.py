@@ -5,23 +5,28 @@
 #
 
 # @lc code=start
-
+from collections import OrderedDict
 class AuthenticationManager:
 
     def __init__(self, timeToLive: int):
         self.timeToLive = timeToLive
-        self.data = {}
+        self.data = OrderedDict()
 
     def generate(self, tokenId: str, currentTime: int) -> None:
         self.data[tokenId] = currentTime + self.timeToLive
 
 
     def renew(self, tokenId: str, currentTime: int) -> None:
-        if tokenId in self.data and self.data[tokenId] > currentTime: self.data[tokenId] = currentTime + self.timeToLive
+        if tokenId in self.data:
+            if self.data[tokenId] > currentTime:
+                self.data[tokenId] = currentTime + self.timeToLive
+                self.data.move_to_end(tokenId)
+            else: self.data.pop(tokenId)
 
 
     def countUnexpiredTokens(self, currentTime: int) -> int:
-        self.data = {k: v for k, v in self.data.items() if v > currentTime}
+        while self.data and next(iter(self.data.values())) <= currentTime:
+            self.data.popitem(last = False)
         return len(self.data)
 
 
