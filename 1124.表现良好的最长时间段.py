@@ -25,8 +25,3 @@ class Solution:
 print(Solution().longestWPI([6,6,9]))
 print(Solution().longestWPI([9,9,6,0,6,6,9]))
 print(Solution().longestWPI([6,6,6]))
-
-'''
--1, -1,  1
- 0, -1, -2
-'''
