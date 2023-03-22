@@ -11,7 +11,7 @@ class Solution:
         scores.append(0), ages.append(0)
         self.data = sorted(zip(scores, ages), key=lambda x:(x[1], x[0]))
         n = len(self.data)
-        dp = [[0] * n for _ in range(n + 1)]
+        dp = [[0] * _ for _ in range(n + 1)]
         for idx in reversed(range(n)):
             for val in range(idx):
                 if self.data[idx][1] > self.data[val][1] and self.data[idx][0] < self.data[val][0]:
