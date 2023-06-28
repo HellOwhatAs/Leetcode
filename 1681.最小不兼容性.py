@@ -29,14 +29,14 @@ class Solution:
             incomp = self.func(nums, mask)
             if incomp is not None:
                 dp[mask] = self.func(nums, mask)
-        ori_dp = dp.copy()
+        ori_dp = dp
         for _k in range(1, k):
             new_dp = defaultdict(lambda:inf)
             for mask in ori_dp:
                 for old_mask in dp:
                     if old_mask & mask: continue
                     new_dp[old_mask | mask] = min(new_dp[old_mask | mask], dp[old_mask] + ori_dp[mask])
-            dp = new_dp.copy()
+            dp = new_dp
         return -1 if isinf(ret := dp[(1<<n) - 1]) else ret
 # @lc code=end
 
