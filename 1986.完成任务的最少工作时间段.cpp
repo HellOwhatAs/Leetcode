@@ -19,8 +19,7 @@ public:
             dp[mask] = {INT_MAX, INT_MAX};
             for(int i=0; i<n; ++i){
                 if(mask & (1<<i)){
-                    int pre_num, pre_last;
-                    tie(pre_num, pre_last) = dp[mask ^ (1<<i)];
+                    auto [pre_num, pre_last] = dp[mask ^ (1<<i)];
                     if(pre_last + tasks[i] > sessionTime) ++pre_num, pre_last = tasks[i];
                     else pre_last += tasks[i];
                     dp[mask] = min(dp[mask], {pre_num, pre_last});
