@@ -5,6 +5,7 @@
 #
 
 # @lc code=start
+import json
 class Solution:
     def eval(self, x):
         if isinstance(x, list):
@@ -28,7 +29,7 @@ class Solution:
             return int(x)
     def evaluate(self, expression: str) -> int:
         self.gbl = {}
-        tree = eval(
+        tree = json.loads(
             expression
             .replace(" (", '",(')
             .replace("(", '("')
