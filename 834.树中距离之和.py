@@ -19,7 +19,6 @@ class Solution:
         
     def swap_root(self, child: int, root: int):
         '''assuming `dp` and `sz` are initialized with `root` being root'''
-        __backup__ = self.dp[root], self.dp[child], self.sz[root], self.sz[child]
         self.dp[root] -= self.dp[child] + self.sz[child]
         self.sz[root] -= self.sz[child]
         self.sz[child] += self.sz[root]
@@ -29,7 +28,10 @@ class Solution:
         for child1 in self.tree[child]:
             self.swap_root(child1, child)
 
-        self.dp[root], self.dp[child], self.sz[root], self.sz[child] = __backup__
+        self.dp[child] -= self.dp[root] + self.sz[root]
+        self.sz[child] -= self.sz[root]
+        self.sz[root] += self.sz[child]
+        self.dp[root] += self.dp[child] + self.sz[child]
 
     def sumOfDistancesInTree(self, n: int, edges: List[List[int]]) -> List[int]:
         self.tree = [set() for _ in range(n)]

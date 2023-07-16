@@ -8,7 +8,6 @@
 #include<vector>
 #include<unordered_set>
 #include<optional>
-#include<tuple>
 using namespace std;
 class Solution {
 public:
@@ -29,7 +28,6 @@ public:
     }
     // assuming `dp` and `sz` are initialized with `root` being root
     void swap_root(int child, int root){
-        auto __backup__ = make_tuple(sz[root], sz[child], dp[root], dp[child]);
         dp[root] -= dp[child] + sz[child];
         sz[root] -= sz[child];
         sz[child] += sz[root];
@@ -40,7 +38,10 @@ public:
             swap_root(t, child);
         }
 
-        tie(sz[root], sz[child], dp[root], dp[child]) = __backup__;
+        dp[child] -= dp[root] + sz[root];
+        sz[child] -= sz[root];
+        sz[root] += sz[child];
+        dp[root] += dp[child] + sz[child];
     }
 
     vector<int> sumOfDistancesInTree(int n, vector<vector<int>>& edges) {
