@@ -32,7 +32,7 @@ public:
         auto __backup__ = make_tuple(sz[root], sz[child], dp[root], dp[child]);
         dp[root] -= dp[child] + sz[child];
         sz[root] -= sz[child];
-        sz[child] = get<0>(__backup__);
+        sz[child] += sz[root];
         dp[child] += dp[root] + sz[root];
 
         ret[child] = dp[child];

@@ -21,7 +21,8 @@ class Solution:
         '''assuming `dp` and `sz` are initialized with `root` being root'''
         __backup__ = self.dp[root], self.dp[child], self.sz[root], self.sz[child]
         self.dp[root] -= self.dp[child] + self.sz[child]
-        self.sz[root], self.sz[child] = self.sz[root] - self.sz[child], self.sz[root]
+        self.sz[root] -= self.sz[child]
+        self.sz[child] += self.sz[root]
         self.dp[child] += self.dp[root] + self.sz[root]
         
         self.ret[child] = self.dp[child]
