@@ -7,12 +7,9 @@
 # @lc code=start
 from typing import List, Optional
 class Solution:
-    def adjlist2tree(self, adjlist: List[List[int]], start: int, father: Optional[int] = None):
-        self.father[start] = father
-        for t in adjlist[start]:
-            if t == father: continue
-            self.tree[start].append(t)
-            self.adjlist2tree(adjlist, t, start)
+    def adjlist2tree(self, start: int, father: Optional[int] = None):
+        if father in self.tree[start]: self.tree[start].remove(father)
+        for t in self.tree[start]: self.adjlist2tree(t, start)
     
     def dfs0(self, start: int):
         for t in self.tree[start]:
@@ -21,7 +18,7 @@ class Solution:
             self.dp[start] += self.dp[t] + self.sz[t]
         
     def swap_root(self, child: int, root: int):
-        '''assuming self.dp and self.sz are initialized with root being root'''
+        '''assuming `dp` and `sz` are initialized with `root` being root'''
         __backup__ = self.dp[root], self.dp[child], self.sz[root], self.sz[child]
         self.dp[root] -= self.dp[child] + self.sz[child]
         self.sz[root], self.sz[child] = self.sz[root] - self.sz[child], self.sz[root]
@@ -34,11 +31,9 @@ class Solution:
         self.dp[root], self.dp[child], self.sz[root], self.sz[child] = __backup__
 
     def sumOfDistancesInTree(self, n: int, edges: List[List[int]]) -> List[int]:
-        self.tree, self.father = [[] for _ in range(n)], [None] * n
-        adjlist = [[] for _ in range(n)]
-        for s, t in edges: adjlist[s].append(t), adjlist[t].append(s)
-        self.adjlist2tree(adjlist, 0)
-        del adjlist
+        self.tree = [set() for _ in range(n)]
+        for s, t in edges: self.tree[s].add(t), self.tree[t].add(s)
+        self.adjlist2tree(0)
         
         self.dp, self.sz, self.ret = [0] * n, [1] * n, [None] * n
         self.dfs0(0)
