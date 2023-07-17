@@ -9,26 +9,20 @@
 using namespace std;
 class Solution {
 public:
+    string ret;
+    void func(const string& n1, const string& n2, int idx, int carry = 0) {
+        if(n1.size() <= idx && n2.size() <= idx && carry == 0) return;
+        int tmp = (idx < n1.size()? n1[idx] - '0': 0) + (idx < n2.size()? n2[idx] - '0': 0) + carry;
+        ret.push_back(tmp % 10 + '0');
+        func(n1, n2, idx + 1, tmp / 10);
+    }
     string addStrings(string num1, string num2) {
         reverse(num1.begin(), num1.end());
         reverse(num2.begin(), num2.end());
-        if(num1.size() < num2.size())num1.swap(num2);
-        for(int i=0; i<num2.size(); ++i){
-            num1[i] += num2[i] - '0';
-        }
-        int i = 0, tmp = 0;
-        while(i < num1.size() || num1[i] > '9'){
-            num1[i] += tmp;
-            tmp = 0;
-            if(num1[i] > '9'){
-                tmp = (num1[i]- '0')/10;
-                num1[i] = (num1[i]- '0')%10 + '0';
-            }
-            ++i;
-        }
-        if(tmp)num1.push_back(tmp + '0');
-        reverse(num1.begin(), num1.end());
-        return num1;
+        ret.clear();
+        func(num1, num2, 0);
+        reverse(ret.begin(), ret.end());
+        return ret;
     }
 };
 // @lc code=end
