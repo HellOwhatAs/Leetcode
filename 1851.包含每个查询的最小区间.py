@@ -10,19 +10,18 @@ import heapq
 class Solution:
     def minInterval(self, intervals: List[List[int]], queries: List[int]) -> List[int]:
         intervals.sort()
-        ori_order = sorted(range(len(queries)), key=lambda x: queries[x])
-        queries = [queries[ori_order[i]] for i in range(len(queries))]
+        order = sorted(range(len(queries)), key=lambda x: queries[x])
         pq = []
         ret = [-1] * len(queries)
         idx = 0
-        for i, x in enumerate(queries):
-            while idx < len(intervals) and intervals[idx][0] <= x:
+        for i in order:
+            while idx < len(intervals) and intervals[idx][0] <= queries[i]:
                 heapq.heappush(pq, (intervals[idx][1] - intervals[idx][0] + 1, intervals[idx][1]))
                 idx += 1
-            while pq and pq[0][1] < x:
+            while pq and pq[0][1] < queries[i]:
                 heapq.heappop(pq)
             if pq:
-                ret[ori_order[i]] = pq[0][0]
+                ret[i] = pq[0][0]
         return ret
 # @lc code=end
 
